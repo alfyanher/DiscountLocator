@@ -1,9 +1,12 @@
 package hr.foi.air.discountlocator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -12,6 +15,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Find reference to btn_details and subscribe to onClick event.
+        Button btnDetails = (Button)findViewById(R.id.btn_details);
+        btnDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), DiscountDetailsActivity.class);
+                startActivity(i);
+                //Note: Think why we can't use this as Context and we have to use getApplicationContext?
+                //Note2: Can you explain what is parameter of setOnClickListener method?
+            }
+        });
     }
 
     /**
