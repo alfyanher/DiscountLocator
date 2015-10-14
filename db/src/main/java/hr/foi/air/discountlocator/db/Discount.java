@@ -81,7 +81,7 @@ public class Discount extends Model{
         return endDate;
     }
 
-    public int getDiscount() {
+    public int getDiscountValue() {
         return discountValue;
     }
 
@@ -89,12 +89,22 @@ public class Discount extends Model{
         return store;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    /**
+     * Method changes data in current object and updates it in database as well.
+     * @param updatedDiscount An instance of object with updated data.
+     */
+    public void updateDiscount(Discount updatedDiscount)
+    {
+        this.name = updatedDiscount.getName();
+        this.description = updatedDiscount.getDescription();
+        this.startDate = updatedDiscount.getStartDate();
+        this.endDate = updatedDiscount.getEndDate();
+        this.discountValue = updatedDiscount.getDiscountValue();
+        this.save();
     }
 }
 
 //Note:
-// - Table name is in plural while class represents an object in singular. Why?
-// - What are other annotations (except name and index) that can be added to column attribute?
-// - What are other methods that can be created in each Model class.
+// - You can add update method that will receive one or more attributes that should be changed.
+// - You can add delete method, that will delete this object from database. But, when using it, be careful to remote the object from data layer and ui layer as well.
+// - Try to experiment with active android and create methods you wish/need.

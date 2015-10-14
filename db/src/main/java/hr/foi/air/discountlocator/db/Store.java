@@ -4,6 +4,8 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
 /**
  * Entity class representing a store item. 
  * Each store can have one or more discounts and is connected to one or more categories.
@@ -70,9 +72,31 @@ public class Store extends Model {
     public long getLatitude() {
         return latitude;
     }
+
+    /**
+     * Using an existing relationship, we can easily get list of instances in related Model class.
+     * @return List of discounts for this Store.
+     */
+    public List<Discount> discounts(){
+        return getMany(Discount.class, "Store");
+    }
+
+    /**
+     * Method changes data in current object and updates it in database as well.
+     * @param updatedStore An instance of object with updated data.
+     */
+    public void updateStore(Store updatedStore)
+    {
+        this.name = updatedStore.getName();
+        this.description = updatedStore.getDescription();
+        this.imgUrl = updatedStore.getImgUrl();
+        this.longitude = updatedStore.getLongitude();
+        this.latitude = updatedStore.getLatitude();
+        this.save();
+    }
 }
 
 //Note:
-// - Table name is in plural while class represents an object in singular. Why?
-// - What are other annotations (except name and index) that can be added to column attribute?
-// - What are other methods that can be created in each Model class.
+// - You can add update method that will receive one or more attributes that should be changed.
+// - You can add delete method, that will delete this object from database. But, when using it, be careful to remote the object from data layer and ui layer as well.
+// - Try to experiment with active android and create methods you wish/need.
