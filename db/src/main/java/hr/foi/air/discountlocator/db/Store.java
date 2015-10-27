@@ -3,6 +3,8 @@ package hr.foi.air.discountlocator.db;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
@@ -13,24 +15,31 @@ import java.util.List;
  * @see Category
  * @see StoreCategory
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "Stores")
 public class Store extends Model {
 
+    @JsonProperty("id")
     @Column(name = "remoteId")
     private long remoteId;
 
+    @JsonProperty("name")
     @Column(name = "name", index = true)
     private String name;
 
+    @JsonProperty("description")
     @Column(name = "description", index = true)
     private String description;
 
+    @JsonProperty("imgUrl")
     @Column(name = "imgUrl")
     private String imgUrl;
 
+    @JsonProperty("longitude")
     @Column(name = "longitude")
     private long longitude;
 
+    @JsonProperty("latitude")
     @Column(name = "latitude")
     private long latitude;
 

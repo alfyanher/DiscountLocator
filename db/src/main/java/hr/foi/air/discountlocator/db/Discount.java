@@ -3,6 +3,8 @@ package hr.foi.air.discountlocator.db;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
@@ -14,27 +16,35 @@ import java.util.Date;
  * @see DiscountArticle
  * @see Article
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "Discounts")
 public class Discount extends Model{
 
+    @JsonProperty("id")
     @Column(name = "remoteId")
     private long remoteId;
 
+    @JsonProperty("name")
     @Column(name = "name", index = true)
     private String name;
 
+    @JsonProperty("description")
     @Column(name = "description", index = true)
     private String description;
 
+    @JsonProperty("storeId")
     @Column(name = "storeId")
     private long storeId;
 
+    @JsonProperty("startDate")
     @Column(name = "startDate")
     private Date startDate;
 
+    @JsonProperty("endDate")
     @Column(name = "endDate")
     private Date endDate;
 
+    @JsonProperty("discountValue")
     @Column(name = "discountValue")
     private int discountValue;
 
