@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 
+import hr.foi.air.discountlocator.core.DataLoader;
+import hr.foi.air.discountlocator.loaders.WebServiceDataLoader;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                 //Note2: Can you explain what is parameter of setOnClickListener method?
             }
         });
+
+        DataLoader dataLoader = new WebServiceDataLoader();
+        dataLoader.LoadData(this);
     }
 
     /**
