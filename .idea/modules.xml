@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DiscountLocatorPrivate.iml" filepath="$PROJECT_DIR$/DiscountLocatorPrivate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DiscountLocator.iml" filepath="$PROJECT_DIR$/DiscountLocator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/db/db.iml" filepath="$PROJECT_DIR$/db/db.iml" />
     </modules>
