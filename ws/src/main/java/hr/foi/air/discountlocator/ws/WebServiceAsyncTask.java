@@ -2,6 +2,9 @@ package hr.foi.air.discountlocator.ws;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -69,8 +72,35 @@ public class WebServiceAsyncTask extends AsyncTask <WebServiceParams, Void, Asyn
     protected void onPostExecute(AsyncTaskInnerResults asyncTaskInnerResults) {
         super.onPostExecute(asyncTaskInnerResults);
 
-        //implement response meta-analysis here
+        //response meta-analysis
+        String result = "";
+        boolean ok = false;
+        long timestamp = 0;
 
-        //implement caller notification on task completed and send results
+        if (asyncTaskInnerResults.wsResult != "") {
+            try {
+                JSONObject jsonObject = new JSONObject(asyncTaskInnerResults.wsResult);
+                if (jsonObject.has("responseId")) {
+                    if (jsonObject.getInt("responseId") == 100) {
+                        result = jsonObject.getString(asyncTaskInnerResults.targetAttribute);
+                        timestamp = jsonObject.getLong("timeStamp");
+                        ok = true;
+                    } else {
+                        result = jsonObject.getString("responseText");
+                        timestamp = jsonObject.getLong("timeStamp");
+                    }
+                } else {
+                    result = "Operation failed! Unknown problem!";
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                result = "Operation failed! Unknown problem!";
+            }
+        }
+
+        //caller notification on task completed
+        if (asyncTaskInnerResults.handler != null)
+            asyncTaskInnerResults.handler.handleResult(result, ok, timestamp);
     }
 }
