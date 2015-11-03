@@ -2,7 +2,6 @@
     <string name="app_name">Discount Locator</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
-    <string name="btn_details">Show details</string>
     <string name="data_loaded_stores">Stores loaded successfully!</string>
     <string name="data_loaded_discounts">Discounts loaded successfully!</string>
 </resources>
