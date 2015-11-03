@@ -14,6 +14,8 @@ import hr.foi.air.discountlocator.ws.WebServiceResultHandler;
 
 public class WebServiceDataLoader extends DataLoader {
     Activity activity = null;
+    private boolean storesLoaded = false;
+    private boolean discountsLoaded = false;
 
     public void LoadData(Activity activity){
         this.activity = activity;
@@ -51,6 +53,8 @@ public class WebServiceDataLoader extends DataLoader {
                         s.save();
                     }
                     Toast.makeText(activity, R.string.data_loaded_stores, Toast.LENGTH_SHORT).show();
+                    storesLoaded = true;
+                    showLoadedData();
                 } catch (Exception e) {
                     Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
                 }
@@ -69,10 +73,25 @@ public class WebServiceDataLoader extends DataLoader {
                         d.save();
                     }
                     Toast.makeText(activity, R.string.data_loaded_discounts, Toast.LENGTH_SHORT).show();
+                    discountsLoaded = true;
+                    showLoadedData();
                 } catch (Exception e) {
                     Toast.makeText(activity, result, Toast.LENGTH_SHORT).show();
                 }
             }
         }
     };
+
+    private void showLoadedData()
+    {
+        //synchronization
+        if (storesLoaded && discountsLoaded)
+        {
+            //TODO - Implement logic upon data synchronization.
+
+            //reset flags
+            storesLoaded = false;
+            discountsLoaded = false;
+        }
+    }
 }
