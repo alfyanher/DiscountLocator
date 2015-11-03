@@ -4,8 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
 
 public class JsonAdapter {
@@ -35,5 +37,32 @@ public class JsonAdapter {
         }
 
         return stores;
+    }
+
+    public static ArrayList<Discount> getDiscounts(String jsonString) {
+        ArrayList<Discount> discounts = new ArrayList<Discount>();
+        try {
+            JSONArray jsonArr = new JSONArray(jsonString);
+            int size = jsonArr.length();
+
+            for (int i = 0; i < size; i++) {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                Discount discount = new Discount(jsonObj.getLong("id"),
+                        jsonObj.getString("name"),
+                        jsonObj.getString("description"),
+                        jsonObj.getLong("storeId"),
+                        sdf.parse(jsonObj.getString("startDate")),
+                        sdf.parse(jsonObj.getString("endDate")),
+                        jsonObj.getInt("discount"));
+                discounts.add(discount);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return discounts;
     }
 }
