@@ -87,11 +87,29 @@ public class WebServiceDataLoader extends DataLoader {
         //synchronization
         if (storesLoaded && discountsLoaded)
         {
-            //TODO - Implement logic upon data synchronization.
+            //binding newly downloaded data
+            bindDiscountsToStores();
+
+            //TODO Show data on screen!
 
             //reset flags
             storesLoaded = false;
             discountsLoaded = false;
+        }
+    }
+
+    private void bindDiscountsToStores()
+    {
+        for (Store s: stores)
+        {
+            for (Discount d: discounts)
+            {
+                if (d.getStoreId() == s.getRemoteId())
+                {
+                    d.setStore(s);
+                    d.save();
+                }
+            }
         }
     }
 }

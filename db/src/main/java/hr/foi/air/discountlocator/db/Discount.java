@@ -89,6 +89,10 @@ public class Discount extends Model{
         return store;
     }
 
+    public void setStore(Store s) {
+        this.store = s;
+    }
+
     /**
      * Method changes data in current object and updates it in database as well.
      * @param updatedDiscount An instance of object with updated data.
