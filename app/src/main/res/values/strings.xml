@@ -4,4 +4,9 @@
     <string name="action_search">Search</string>
     <string name="data_loaded_stores">Stores loaded successfully!</string>
     <string name="data_loaded_discounts">Discounts loaded successfully!</string>
+    <string name="store_name">Store name</string>
+    <string name="store_description">This is a store description. This description can be very short (even nonexistent) or very long as in this example. This means that the layout should be designed in a such way that it can accept different text lengths.</string>
+    <string name="store_logo_description">This image represents store logo.</string>
+    <string name="discount_name">Discount name</string>
+    <string name="discount_description">This is a discount description. This description can be very short (even nonexistent) or very long as in this example. This means that the layout should be designed in a such way that it can accept different text lengths.</string>
 </resources>
