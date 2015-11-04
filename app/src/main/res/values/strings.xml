@@ -9,4 +9,7 @@
     <string name="store_logo_description">This image represents store logo.</string>
     <string name="discount_name">Discount name</string>
     <string name="discount_description">This is a discount description. This description can be very short (even nonexistent) or very long as in this example. This means that the layout should be designed in a such way that it can accept different text lengths.</string>
+    <string name="q_delete_discount">Are you sure you want to delete discount?</string>
+    <string name="no">No, thanks!</string>
+    <string name="yes">Yes, sure!</string>
 </resources>

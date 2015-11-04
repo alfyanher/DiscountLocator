@@ -1,6 +1,8 @@
 package hr.foi.air.discountlocator;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -136,6 +138,7 @@ public class DiscountsExpandableAdapter extends BaseExpandableListAdapter {
 
         convertView.setOnClickListener(onClickListener);
         convertView.setTag(new Object[]{childDiscount.getRemoteId(), groupPosition});
+        convertView.setOnLongClickListener(onLongClickListener);
 
         return convertView;
     }
@@ -147,6 +150,56 @@ public class DiscountsExpandableAdapter extends BaseExpandableListAdapter {
             Object[] tagData = (Object[]) v.getTag();
             discountActivityIntent.putExtra("id", (Long) tagData[0]);
             activity.startActivity(discountActivityIntent);
+        }
+    };
+
+    private View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(final View view) {
+            // create Yes/No dialog
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+            dialogBuilder.setMessage(activity.getResources().getString(R.string.q_delete_discount))
+                    .setPositiveButton(activity.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+
+                                    // remove child element from the list, and delete it from database
+                                    Object[] tagData = (Object[]) view.getTag();
+
+                                    Discount discountToDelete = null;
+                                    for (Discount d : childItems) {
+                                        if(d.getRemoteId() == (Long) tagData[0]){
+                                            discountToDelete = d;
+                                        }
+                                    }
+                                    childItems.remove(discountToDelete);
+                                    discountToDelete.delete();
+
+                                    // if there are no more discounts, delete parent store
+                                    // (remove from list and delete from database)
+
+                                    if(getChildrenCount((Integer)tagData[1]) == 0){
+                                        Store s = ((Store)getGroup((Integer)tagData[1]));
+                                        if(s.discounts().size() == 0){
+                                            s.delete();
+                                        }
+                                        parentItems.remove(getGroup((Integer)tagData[1]));
+
+                                    }
+
+                                    // propagate changes
+                                    notifyDataSetChanged();
+                                    break;
+                            }
+                        }
+                    })
+                    .setNegativeButton(activity.getResources().getString(R.string.no), null)
+                    .show();
+
+            // return true to say "event handled"
+            return true;
         }
     };
 
