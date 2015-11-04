@@ -1,8 +1,12 @@
 package hr.foi.air.discountlocator.loaders;
 
 import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import hr.foi.air.discountlocator.DiscountsExpandableAdapter;
 import hr.foi.air.discountlocator.R;
 import hr.foi.air.discountlocator.core.DataLoader;
 import hr.foi.air.discountlocator.core.JsonAdapter;
@@ -90,7 +94,14 @@ public class WebServiceDataLoader extends DataLoader {
             //binding newly downloaded data
             bindDiscountsToStores();
 
-            //TODO Show data on screen!
+            //show data on screen
+            DiscountsExpandableAdapter adapter = new DiscountsExpandableAdapter(stores, discounts);
+            adapter.setInflater((LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE), this.activity);
+            ExpandableListView elv = (ExpandableListView)activity.findViewById(R.id.elv_stores_and_discounts);
+            if (elv != null)
+            {
+                elv.setAdapter(adapter);
+            }
 
             //reset flags
             storesLoaded = false;
