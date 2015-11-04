@@ -5,6 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.activeandroid.query.Select;
+
+import java.text.SimpleDateFormat;
+
+import hr.foi.air.discountlocator.db.Discount;
 
 public class DiscountDetailsActivity extends AppCompatActivity {
 
@@ -19,6 +26,27 @@ public class DiscountDetailsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         //Note: Think why we had to use getSupportActionBar() method instead of getActionBar()?
+
+        //extracting the data from the bundle
+        // get Bundle and extra data sent from caller activity
+        Bundle data = getIntent().getExtras();
+        long id = data.getLong("id");
+
+        Discount d = new Select().from(Discount.class).where("remoteId == ?", id).executeSingle();
+
+        TextView name = ((TextView) findViewById(R.id.discount_details_name));
+        name.setText(d.getName() + ", " + d.getDiscountValue() + "%");
+
+        TextView description = ((TextView) findViewById(R.id.discount_details_description));
+        description.setText(d.getDescription());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        TextView startDate = ((TextView) findViewById(R.id.discount_details_start));
+        startDate.setText(sdf.format(d.getStartDate()));
+
+        TextView endDate = ((TextView) findViewById(R.id.discount_details_end));
+        endDate.setText(" - " + sdf.format(d.getEndDate()));
     }
 
     /**

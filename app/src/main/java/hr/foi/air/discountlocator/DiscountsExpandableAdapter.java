@@ -1,6 +1,7 @@
 package hr.foi.air.discountlocator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,8 +134,21 @@ public class DiscountsExpandableAdapter extends BaseExpandableListAdapter {
         descView.setText(childDiscount.getDescription());
         discountView.setText("" + childDiscount.getDiscountValue());
 
+        convertView.setOnClickListener(onClickListener);
+        convertView.setTag(new Object[]{childDiscount.getRemoteId(), groupPosition});
+
         return convertView;
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent discountActivityIntent = new Intent(activity, DiscountDetailsActivity.class);
+            Object[] tagData = (Object[]) v.getTag();
+            discountActivityIntent.putExtra("id", (Long) tagData[0]);
+            activity.startActivity(discountActivityIntent);
+        }
+    };
 
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
