@@ -1,5 +1,6 @@
 package hr.foi.air.discountlocator;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -19,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
         ActiveAndroid.initialize(this);
         setContentView(R.layout.activity_main);
 
-        DataLoader dataLoader = new WebServiceDataLoader();
-        dataLoader.LoadData(this);
+        DiscountListFragment dlf = new DiscountListFragment();
+        FragmentTransaction fm = getFragmentManager().beginTransaction();
+        fm.replace(R.id.fragment_container, dlf);
+        fm.commit();
     }
 
     /**
