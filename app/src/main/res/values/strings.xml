@@ -12,4 +12,7 @@
     <string name="q_delete_discount">Are you sure you want to delete discount?</string>
     <string name="no">No, thanks!</string>
     <string name="yes">Yes, sure!</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
