@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -49,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         FragmentTransaction fm = getFragmentManager().beginTransaction();
         fm.replace(R.id.fragment_container, dlf);
         fm.commit();
+
+        NavigationManager nm = NavigationManager.getInstance();
+        nm.setDependencies(this, mDrawer, (NavigationView) findViewById(R.id.nv_drawer));
+        nm.addItem(dlf);
     }
 
     // ActionBarDrawerToggle from support v.7
