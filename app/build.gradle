@@ -27,4 +27,5 @@ dependencies {
     compile project (':db')
     compile project (':ws')
     compile project (':core')
+    compile project (':maps')
 }

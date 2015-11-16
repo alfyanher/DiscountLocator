@@ -19,6 +19,7 @@ import com.activeandroid.ActiveAndroid;
 
 import hr.foi.air.discountlocator.core.DataLoader;
 import hr.foi.air.discountlocator.loaders.WebServiceDataLoader;
+import hr.foi.air.discountlocator.maps.MapsFragment;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     private DrawerLayout mDrawer;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         NavigationManager nm = NavigationManager.getInstance();
         nm.setDependencies(this, mDrawer, (NavigationView) findViewById(R.id.nv_drawer));
         nm.addItem(dlf);
+        nm.addItem(new MapsFragment());
     }
 
     // ActionBarDrawerToggle from support v.7
