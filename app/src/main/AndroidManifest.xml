@@ -15,7 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DiscountDetailsActivity" >
+        <activity android:name=".DiscountDetailsFragment" >
         </activity>
     </application>
 

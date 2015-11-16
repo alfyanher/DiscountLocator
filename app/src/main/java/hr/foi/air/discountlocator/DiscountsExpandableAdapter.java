@@ -2,8 +2,10 @@ package hr.foi.air.discountlocator;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,10 +148,19 @@ public class DiscountsExpandableAdapter extends BaseExpandableListAdapter {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent discountActivityIntent = new Intent(activity, DiscountDetailsActivity.class);
             Object[] tagData = (Object[]) v.getTag();
-            discountActivityIntent.putExtra("id", (Long) tagData[0]);
-            activity.startActivity(discountActivityIntent);
+
+            Bundle args = new Bundle();
+            args.putLong("id", (Long) tagData[0]);
+
+            DiscountDetailsFragment ddf = new DiscountDetailsFragment();
+            ddf.setArguments(args);
+
+            FragmentTransaction fm = activity.getFragmentManager().beginTransaction();
+            fm.replace(R.id.fragment_container, ddf);
+            fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fm.addToBackStack("details");
+            fm.commit();
         }
     };
 
