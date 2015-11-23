@@ -1,4 +1,4 @@
-package hr.foi.air.discountlocator;
+package hr.foi.air.discountlocator.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.activeandroid.query.Select;
 
 import java.text.SimpleDateFormat;
 
+import hr.foi.air.discountlocator.R;
 import hr.foi.air.discountlocator.db.Discount;
 
 public class DiscountDetailsFragment extends Fragment {

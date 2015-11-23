@@ -1,4 +1,4 @@
-package hr.foi.air.discountlocator;
+package hr.foi.air.discountlocator.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -10,10 +10,13 @@ import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
 
+import hr.foi.air.discountlocator.DiscountsExpandableAdapter;
+import hr.foi.air.discountlocator.R;
 import hr.foi.air.discountlocator.core.DataLoader;
 import hr.foi.air.discountlocator.core.NavigationItem;
 import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
+import hr.foi.air.discountlocator.loaders.DbDataLoader;
 import hr.foi.air.discountlocator.loaders.WebServiceDataLoader;
 
 public class DiscountListFragment extends Fragment implements NavigationItem {
@@ -29,7 +32,12 @@ public class DiscountListFragment extends Fragment implements NavigationItem {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DataLoader dl = new WebServiceDataLoader();
+        DataLoader dl = null;
+        switch(2){ // this will always select data from DbDataLoader (to be appended in following section)
+            case 1: dl = new WebServiceDataLoader(); break;
+            case 2: dl = new DbDataLoader(); break;
+            default: dl = new WebServiceDataLoader(); break;
+        }
         dl.LoadData(getActivity());
     }
 
