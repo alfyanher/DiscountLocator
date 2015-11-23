@@ -92,6 +92,7 @@ public class DiscountListFragment extends Fragment implements NavigationItem {
         return this;
     }
 
+    @Override
     public void loadData(ArrayList<Store> stores, ArrayList<Discount> discounts) {
         DiscountsExpandableAdapter adapter = new DiscountsExpandableAdapter(stores, discounts);
         adapter.setInflater( (LayoutInflater) getActivity().getSystemService(FragmentActivity.LAYOUT_INFLATER_SERVICE), getActivity());
@@ -100,5 +101,8 @@ public class DiscountListFragment extends Fragment implements NavigationItem {
         if(expandableList != null) {
             expandableList.setAdapter(adapter);
         }
+
+        this.stores = stores;
+        this.discounts = discounts;
     }
 }

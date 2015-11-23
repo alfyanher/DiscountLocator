@@ -16,4 +16,10 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="loading_from_db">Loading data from local database</string>
+
+    <string name="search">Search</string>
+    <string name="search_dialog_title">Search</string>
+    <string name="search_dialog_text">What are you looking for?</string>
+    <string name="search_hint">Enter search terms</string>
+    <string name="search_results_found"> results found</string>
 </resources>

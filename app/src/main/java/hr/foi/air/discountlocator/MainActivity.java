@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private ActionBarDrawerToggle mDrawerToggle;
     private FragmentManager mFm;
     private DiscountListFragment dlf;
+    private MapsFragment mf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         mToolbar.setNavigationOnClickListener(navigationClick);
 
         dlf = new DiscountListFragment();
+        mf = new MapsFragment();
         FragmentTransaction fm = getFragmentManager().beginTransaction();
         fm.replace(R.id.fragment_container, dlf);
         fm.commit();
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         NavigationManager nm = NavigationManager.getInstance();
         nm.setDependencies(this, mDrawer, (NavigationView) findViewById(R.id.nv_drawer));
         nm.addItem(dlf);
-        nm.addItem(new MapsFragment());
+        nm.addItem(mf);
     }
 
     // ActionBarDrawerToggle from support v.7
@@ -94,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         switch (id)
         {
             case R.id.action_search:
+                SearchDialog sd = new SearchDialog(this);
+                sd.show();
                 break;
             case R.id.action_settings:
                 Intent intent = new Intent(this, AppPreferenceActivity.class);
@@ -150,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public void onDataLoaded(ArrayList<Store> stores, ArrayList<Discount> discounts) {
         if(dlf != null)
             dlf.loadData(stores, discounts);
+        if(mf != null)
+            mf.loadData(stores, discounts);
     }
 
     /*
