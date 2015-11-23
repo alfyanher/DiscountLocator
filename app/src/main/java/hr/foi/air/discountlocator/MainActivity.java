@@ -54,14 +54,29 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         mToolbar.setNavigationOnClickListener(navigationClick);
 
-        dlf = new DiscountListFragment();
-        mf = new MapsFragment();
-        FragmentTransaction fm = getFragmentManager().beginTransaction();
-        fm.replace(R.id.fragment_container, dlf);
-        fm.commit();
-
         NavigationManager nm = NavigationManager.getInstance();
         nm.setDependencies(this, mDrawer, (NavigationView) findViewById(R.id.nv_drawer));
+
+        if(savedInstanceState == null){  // running this for the first time
+            dlf = new DiscountListFragment();
+            mf = new MapsFragment();
+
+            FragmentTransaction fm = getFragmentManager().beginTransaction();
+            fm.replace(R.id.fragment_container, dlf);
+            fm.commit();
+
+        } else {  // running to reuse existing fragments
+            dlf = (DiscountListFragment) mFm.findFragmentById(R.id.discount_fragment); // add the name in the layout file
+            mf = (MapsFragment) mFm.findFragmentById(R.id.frame);
+
+            if(dlf == null){
+                dlf = new DiscountListFragment();
+            }
+            if(mf == null) {
+                mf = new MapsFragment();
+            }
+        }
+
         nm.addItem(dlf);
         nm.addItem(mf);
     }

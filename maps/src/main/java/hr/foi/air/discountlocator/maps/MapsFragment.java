@@ -34,6 +34,7 @@ public class MapsFragment extends Fragment implements NavigationItem {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
         return inflater.inflate(R.layout.maps_fragment, container, false);
     }
 
