@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="pref_application_settings">Application settings</string>
+    <string name="pref_application_settings_desc">Application releted prferences, e.g. color..</string>
+
+    <string name="pref_radius">Radius</string>
+    <string name="pref_radius_desc">Display stores only in this radius</string>
+
+    <string name="pref_animate">Use animations</string>
+    <string name="pref_animate_desc">Animate transitions between details</string>
+
+    <string name="pref_backswipe">Use back swipe</string>
+    <string name="pref_backswipe_desc">Uses swipe gesture to go back</string>
+
+    <string name="pref_allow_web">Enable web service</string>
+    <string name="pref_allow_web_desc">Collect data from web services</string>
+
+    <string name="pref_notif_service">Notification service</string>
+    <string name="pref_notif_service_desc">Enables application to notify on new discounts</string>
+
+</resources>

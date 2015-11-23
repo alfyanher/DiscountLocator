@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_animate"
+        android:summary="@string/pref_animate_desc"
+        android:title="@string/pref_animate" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_backswipe"
+        android:summary="@string/pref_backswipe_desc"
+        android:title="@string/pref_backswipe" />
+
+    <PreferenceScreen
+        android:key="pref_sub"
+        android:persistent="false"
+        android:title="@string/pref_application_settings"
+        android:summary="@string/pref_application_settings_desc">
+
+        <SwitchPreference
+            android:key="pref_allow_web"
+            android:summary="@string/pref_allow_web_desc"
+            android:title="@string/pref_allow_web"
+            android:defaultValue="true"/>
+        <SwitchPreference
+            android:key="pref_notif_service"
+            android:summary="@string/pref_notif_service_desc"
+            android:title="@string/pref_notif_service"
+            android:defaultValue="false"/>
+    </PreferenceScreen>
+    <ListPreference
+        android:summary="@string/pref_radius_desc"
+        android:entries="@array/radius"
+        android:entryValues="@array/radius_values"
+        android:title="@string/pref_radius"
+        android:key="pref_radius"
+        android:defaultValue="1"/>
 
 </PreferenceScreen>

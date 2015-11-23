@@ -2,6 +2,7 @@ package hr.foi.air.discountlocator;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -19,11 +20,10 @@ import com.activeandroid.ActiveAndroid;
 
 import java.util.ArrayList;
 
-import hr.foi.air.discountlocator.core.DataLoader;
 import hr.foi.air.discountlocator.core.OnDataLoadedListener;
 import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
-import hr.foi.air.discountlocator.loaders.WebServiceDataLoader;
+import hr.foi.air.discountlocator.fragments.DiscountListFragment;
 import hr.foi.air.discountlocator.maps.MapsFragment;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, OnDataLoadedListener{
@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             case R.id.action_search:
                 break;
             case R.id.action_settings:
+                Intent intent = new Intent(this, AppPreferenceActivity.class);
+                startActivity(intent);
                 break;
         }
 

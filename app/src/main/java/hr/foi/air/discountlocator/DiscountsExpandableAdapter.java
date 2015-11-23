@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 
 import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
+import hr.foi.air.discountlocator.fragments.DiscountDetailsFragment;
 
 public class DiscountsExpandableAdapter extends BaseExpandableListAdapter {
 

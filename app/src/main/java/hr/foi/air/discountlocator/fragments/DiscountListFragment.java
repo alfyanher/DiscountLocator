@@ -1,12 +1,15 @@
 package hr.foi.air.discountlocator.fragments;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,6 +26,17 @@ public class DiscountListFragment extends Fragment implements NavigationItem {
 
     private int position;
     private String name = "Discount List";
+    private boolean mAlereadyLoaded = false;
+    private ArrayList<Store> stores;
+    private ArrayList<Discount> discounts;
+
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,13 +46,27 @@ public class DiscountListFragment extends Fragment implements NavigationItem {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        DataLoader dl = null;
-        switch(2){ // this will always select data from DbDataLoader (to be appended in following section)
-            case 1: dl = new WebServiceDataLoader(); break;
-            case 2: dl = new DbDataLoader(); break;
-            default: dl = new WebServiceDataLoader(); break;
+        if(savedInstanceState == null && !mAlereadyLoaded){
+            mAlereadyLoaded = true;
+            // load data from database
+            DataLoader dl = new DbDataLoader();
+            dl.LoadData(getActivity());
+
+            //if no data loaded, call ws if allowed
+            if(!dl.dataLoaded()){
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                if(preferences.getBoolean("pref_allow_web", true)){
+                    dl = new WebServiceDataLoader();
+                    dl.LoadData(getActivity());
+                }
+                else{
+                    Toast.makeText(getActivity(), "Local database is empty. Get from web disabled.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        } else {
+            loadData(stores, discounts);
         }
-        dl.LoadData(getActivity());
     }
 
     @Override
