@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private Toolbar mToolbar; // from android.support.v7.widget.Toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private FragmentManager mFm;
-    private DiscountListFragment dlf;
-    private MapsFragment mf;
+    NavigationManager nm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,31 +53,22 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         mToolbar.setNavigationOnClickListener(navigationClick);
 
-        NavigationManager nm = NavigationManager.getInstance();
+        nm = NavigationManager.getInstance();
         nm.setDependencies(this, mDrawer, (NavigationView) findViewById(R.id.nv_drawer));
 
         if(savedInstanceState == null){  // running this for the first time
-            dlf = new DiscountListFragment();
-            mf = new MapsFragment();
+            mFm = getFragmentManager();
+            mFm.addOnBackStackChangedListener(this);
+            mToolbar.setNavigationOnClickListener(navigationClick);
 
-            FragmentTransaction fm = getFragmentManager().beginTransaction();
-            fm.replace(R.id.fragment_container, dlf);
-            fm.commit();
+            // add the modules, only once, only here
+            nm.addItem(new DiscountListFragment());
+            nm.addItem(new MapsFragment());
+            nm.loadDefaultFragment();
 
         } else {  // running to reuse existing fragments
-            dlf = (DiscountListFragment) mFm.findFragmentById(R.id.discount_fragment); // add the name in the layout file
-            mf = (MapsFragment) mFm.findFragmentById(R.id.frame);
-
-            if(dlf == null){
-                dlf = new DiscountListFragment();
-            }
-            if(mf == null) {
-                mf = new MapsFragment();
-            }
+            nm.reloadItems(); // do not add modules again, reuse existing ones
         }
-
-        nm.addItem(dlf);
-        nm.addItem(mf);
     }
 
     // ActionBarDrawerToggle from support v.7
@@ -167,10 +157,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     @Override
     public void onDataLoaded(ArrayList<Store> stores, ArrayList<Discount> discounts) {
-        if(dlf != null)
-            dlf.loadData(stores, discounts);
-        if(mf != null)
-            mf.loadData(stores, discounts);
+        nm.makeDataChange(stores, discounts);
+
     }
 
     /*

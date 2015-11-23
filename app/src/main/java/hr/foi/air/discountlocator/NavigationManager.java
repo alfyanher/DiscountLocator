@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import hr.foi.air.discountlocator.core.NavigationItem;
+import hr.foi.air.discountlocator.db.Discount;
+import hr.foi.air.discountlocator.db.Store;
 
 public class NavigationManager {
 
@@ -19,6 +21,11 @@ public class NavigationManager {
     private Activity mHandlerActivity;
     private NavigationView mNavigationView;
     private DrawerLayout mDrawerLayout;
+    private NavigationItem activeItem;
+
+    private ArrayList<Store> stores;
+    private ArrayList<Discount> discounts;
+
 
     // private constructor
     private NavigationManager(){
@@ -65,13 +72,35 @@ public class NavigationManager {
                 .addToBackStack("")
                 .commit();
 
+        clickedItem.loadData(stores, discounts); // load data, only when the module is about to be shown
+
         menuItem.setChecked(true);
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
-    public void addItem(NavigationItem newItem){
+    public void addItem(NavigationItem newItem) {
         newItem.setPosition(navigationItems.size());
         navigationItems.add(newItem);
-        mNavigationView.getMenu().add(0,newItem.getPosition(),0,newItem.getItemName());
+        mNavigationView.getMenu().add(0, newItem.getPosition(), 0, newItem.getItemName());
+    }
+
+    public void reloadItems() {
+        for (NavigationItem item : this.navigationItems) {
+            mNavigationView.getMenu().add(0, item.getPosition(), 0, item.getItemName());
+        }
+    }
+
+    public void loadDefaultFragment() {
+        activeItem =navigationItems.get(0);
+        FragmentManager fragmentManager = mHandlerActivity.getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, activeItem.getFragment())
+                .commit();
+    }
+
+    public void makeDataChange(ArrayList<Store> stores, ArrayList<Discount> discounts){
+        this.stores = stores;
+        this.discounts = discounts;
+        activeItem.loadData(stores, discounts);  // load data to initial object
     }
 }
