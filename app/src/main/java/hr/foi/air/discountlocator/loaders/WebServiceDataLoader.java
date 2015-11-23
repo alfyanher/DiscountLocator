@@ -22,6 +22,7 @@ public class WebServiceDataLoader extends DataLoader {
     private boolean discountsLoaded = false;
 
     public void LoadData(Activity activity){
+        super.LoadData(activity);
         this.activity = activity;
 
         WebServiceAsyncTask at = new WebServiceAsyncTask();
@@ -95,13 +96,7 @@ public class WebServiceDataLoader extends DataLoader {
             bindDiscountsToStores();
 
             //show data on screen
-            DiscountsExpandableAdapter adapter = new DiscountsExpandableAdapter(stores, discounts);
-            adapter.setInflater((LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE), this.activity);
-            ExpandableListView elv = (ExpandableListView)activity.findViewById(R.id.elv_stores_and_discounts);
-            if (elv != null)
-            {
-                elv.setAdapter(adapter);
-            }
+            dataLoaded();
 
             //reset flags
             storesLoaded = false;

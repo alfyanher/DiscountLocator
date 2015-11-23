@@ -17,15 +17,21 @@ import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
 
+import java.util.ArrayList;
+
 import hr.foi.air.discountlocator.core.DataLoader;
+import hr.foi.air.discountlocator.core.OnDataLoadedListener;
+import hr.foi.air.discountlocator.db.Discount;
+import hr.foi.air.discountlocator.db.Store;
 import hr.foi.air.discountlocator.loaders.WebServiceDataLoader;
 import hr.foi.air.discountlocator.maps.MapsFragment;
 
-public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, OnDataLoadedListener{
     private DrawerLayout mDrawer;
     private Toolbar mToolbar; // from android.support.v7.widget.Toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private FragmentManager mFm;
+    private DiscountListFragment dlf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         mToolbar.setNavigationOnClickListener(navigationClick);
 
-        DiscountListFragment dlf = new DiscountListFragment();
+        dlf = new DiscountListFragment();
         FragmentTransaction fm = getFragmentManager().beginTransaction();
         fm.replace(R.id.fragment_container, dlf);
         fm.commit();
@@ -136,6 +142,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         mDrawerToggle.setDrawerIndicatorEnabled(mFm.getBackStackEntryCount() == 0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(mFm.getBackStackEntryCount() > 0);
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onDataLoaded(ArrayList<Store> stores, ArrayList<Discount> discounts) {
+        if(dlf != null)
+            dlf.loadData(stores, discounts);
     }
 
     /*
