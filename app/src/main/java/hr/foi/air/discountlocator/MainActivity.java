@@ -3,8 +3,10 @@ package hr.foi.air.discountlocator;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,6 +27,7 @@ import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
 import hr.foi.air.discountlocator.fragments.DiscountListFragment;
 import hr.foi.air.discountlocator.maps.MapsFragment;
+import hr.foi.air.discountlocator.services.GcmRegistrationIntentService;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, OnDataLoadedListener{
     private DrawerLayout mDrawer;
@@ -38,6 +41,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         super.onCreate(savedInstanceState);
         ActiveAndroid.initialize(this);
         setContentView(R.layout.activity_main);
+
+        // register with GCM
+        registerWithGcm();
 
         // replace the ActionBar with the Toolbar
         mToolbar= (Toolbar) findViewById(R.id.toolbar);
@@ -159,6 +165,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public void onDataLoaded(ArrayList<Store> stores, ArrayList<Discount> discounts) {
         nm.makeDataChange(stores, discounts);
 
+    }
+
+    private void registerWithGcm() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String gcmToken = preferences.getString(GcmRegistrationIntentService.GCM_TOKEN, "");
+        if(gcmToken.isEmpty()) {
+            Intent i = new Intent(this, GcmRegistrationIntentService.class);
+            startService(i);
+        } else {
+            System.out.println("Already registered with: " + gcmToken);
+        }
     }
 
     /*
