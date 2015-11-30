@@ -41,6 +41,11 @@ public class Discount extends Model{
     @Column(name = "store")
     private Store store;
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
     public Discount() {
         super();
     }
