@@ -22,4 +22,6 @@
     <string name="search_dialog_text">What are you looking for?</string>
     <string name="search_hint">Enter search terms</string>
     <string name="search_results_found"> results found</string>
+
+    <string name="gcm_sender_id">552822210206</string>
 </resources>
