@@ -4,8 +4,10 @@ package hr.foi.air.discountlocator.maps;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.telecom.Call;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,7 +165,10 @@ public class MapsFragment extends Fragment implements NavigationItem {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Discount value = (Discount) parent.getItemAtPosition(position);
                     System.out.println("You selected: " + value.getName());
-                    // Handle displaying here...
+
+                    Intent intent = new Intent(getActivity(), DetailsActivity.class);
+                    intent.putExtra("id", value.getId());
+                    startActivity(intent);
                 }
             });
 
