@@ -50,6 +50,8 @@
             </intent-filter>
         </service>
 
+        <activity android:name=".NotificationDisplayActivity" />
+
     </application>
 
 </manifest>
