@@ -1,29 +1,46 @@
 package hr.foi.air.discountlocator.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.text.SimpleDateFormat;
 
 import hr.foi.air.discountlocator.R;
+import hr.foi.air.discountlocator.ads.DlAdsListener;
 import hr.foi.air.discountlocator.db.Discount;
 
 public class DiscountDetailsFragment extends Fragment {
 
+    private InterstitialAd mInterstitial;
+    private static final String AD_UNIT_ID = "ca-app-pub-8639732656343372/9330745843";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_discount_details, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mInterstitial = new InterstitialAd(this.getActivity());
+        mInterstitial.setAdUnitId(AD_UNIT_ID);
+        mInterstitial.setAdListener(new DlAdsListener(this.getActivity()) {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                mInterstitial.show();
+            }
+        });
+
+        mInterstitial.loadAd(new AdRequest.Builder().build());
     }
 
     @Override
