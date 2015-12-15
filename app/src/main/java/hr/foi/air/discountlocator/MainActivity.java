@@ -26,9 +26,11 @@ import java.util.ArrayList;
 
 import hr.foi.air.discountlocator.ads.DlAdsListener;
 import hr.foi.air.discountlocator.core.OnDataLoadedListener;
+import hr.foi.air.discountlocator.core.PreferenceManagerHelper;
 import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
 import hr.foi.air.discountlocator.fragments.DiscountListFragment;
+import hr.foi.air.discountlocator.iab.BuyMapFragment;
 import hr.foi.air.discountlocator.maps.MapsFragment;
 import hr.foi.air.discountlocator.services.GcmRegistrationIntentService;
 
@@ -77,7 +79,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             // add the modules, only once, only here
             nm.clearItems();
             nm.addItem(new DiscountListFragment());
-            nm.addItem(new MapsFragment());
+            if(!PreferenceManagerHelper.getMapBought(this)) {
+                nm.addItem(new BuyMapFragment());
+            }
+            else {
+                nm.addItem(new MapsFragment());
+            }
             nm.loadDefaultFragment();
 
         } else {  // running to reuse existing fragments
