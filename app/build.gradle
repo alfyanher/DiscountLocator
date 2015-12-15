@@ -29,4 +29,5 @@ dependencies {
     compile project (':ws')
     compile project (':core')
     compile project (':maps')
+    compile 'com.jayway.android.robotium:robotium-solo:5.5.3'
 }
