@@ -90,6 +90,11 @@ public class NavigationManager {
         }
     }
 
+    public void clearItems()
+    {
+        navigationItems.clear();
+    }
+
     public void loadDefaultFragment() {
         activeItem =navigationItems.get(0);
         FragmentManager fragmentManager = mHandlerActivity.getFragmentManager();

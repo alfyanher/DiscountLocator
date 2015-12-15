@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             mToolbar.setNavigationOnClickListener(navigationClick);
 
             // add the modules, only once, only here
+            nm.clearItems();
             nm.addItem(new DiscountListFragment());
             nm.addItem(new MapsFragment());
             nm.loadDefaultFragment();
