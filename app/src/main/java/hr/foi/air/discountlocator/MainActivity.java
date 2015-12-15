@@ -19,9 +19,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.activeandroid.ActiveAndroid;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 
+import hr.foi.air.discountlocator.ads.DlAdsListener;
 import hr.foi.air.discountlocator.core.OnDataLoadedListener;
 import hr.foi.air.discountlocator.db.Discount;
 import hr.foi.air.discountlocator.db.Store;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private ActionBarDrawerToggle mDrawerToggle;
     private FragmentManager mFm;
     NavigationManager nm;
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         // register with GCM
         registerWithGcm();
+
+        //initializing ads
+        initializeAds();
 
         // replace the ActionBar with the Toolbar
         mToolbar= (Toolbar) findViewById(R.id.toolbar);
@@ -177,6 +184,32 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         } else {
             System.out.println("Already registered with: " + gcmToken);
         }
+    }
+
+    private void initializeAds(){
+        adView = (AdView) findViewById(R.id.adView);
+        adView.setAdListener(new DlAdsListener(this));
+        AdRequest.Builder adBuilder = new AdRequest.Builder();
+        //adBuilder.addTestDevice("Device ID"); //<--- Device ID, sometimes necessary for testing
+        adView.loadAd(adBuilder.build());
+    }
+
+    @Override
+    protected void onPause() {
+        adView.pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        adView.destroy();
+        super.onDestroy();
     }
 
     /*
